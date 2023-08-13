@@ -88,17 +88,20 @@ const styles = StyleSheet.create({
   description: {
     color: '#888',
     fontSize: 16,
+    fontStyle:"normal",
+    textAlign:"justify",
   },
   mapContainer: {
     flex: 1,
     margin: 10,
     borderRadius: 20,
     overflow: 'hidden',
+    borderWidth:1,
   },
   map: {
     flex: 1,
     width: '100%',
-    height: 350,
+    height: 250,
   },
 });
 

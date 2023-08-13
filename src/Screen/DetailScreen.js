@@ -31,7 +31,7 @@ const DetailScreen = ({route, navigation}) => {
       .then(data => {
         setRelatedArticles(
           data.filter(
-            item => item.category === category && item.title !== title,
+            item => item.category === category,
           ),
         );
       })
@@ -211,6 +211,7 @@ const DetailScreen = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 0,
   },
   topRow: {
     flexDirection: 'row',
@@ -288,7 +289,8 @@ const styles = StyleSheet.create({
   },
   relatedArticleContainer: {
     width: 200,
-    marginRight: 15,
+    marginRight: 5,
+    marginLeft:5,
     marginBottom: 8,
     paddingVertical: 8,
     borderBottomWidth: 1,
@@ -300,11 +302,15 @@ const styles = StyleSheet.create({
     height: 100,
     resizeMode: 'cover',
     borderRadius: 8,
+    marginTop:-10,
     marginBottom: 4,
+   
   },
   relatedArticleTitle: {
     fontSize: 16,
     fontWeight: 'bold',
+    marginLeft:5,
+    marginRight:5,
   },
   relatedArticleDate: {
     color: '#888',
@@ -317,7 +323,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     width: 32,
     height: 32,
-    marginBottom: 50,
+    marginBottom: 180,
     justifyContent: 'center',
     alignItems: 'center',
   },

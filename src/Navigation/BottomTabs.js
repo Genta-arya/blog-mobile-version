@@ -7,7 +7,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import AboutScreen from '../Screen/AboutScreen';
 import BeritaScreen from '../Screen/BeritaScreen';
 import BookmarkScreen from '../Screen/BookmarkScreen';
-
+import {StatusBar} from 'react-native';
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
@@ -31,14 +31,27 @@ function MyTabs() {
 
           return <IconComponent name={iconName} size={size} color={color} />;
         },
+        tabBarActiveTintColor: '#004D40',
+        tabBarInactiveTintColor: 'gray', 
+        tabBarShowLabel: true, 
+        tabBarStyle: {
+          backgroundColor: 'white', 
+        },
+         headerRight: () => (
+            <StatusBar barStyle="dark-content" backgroundColor="#004D40" />
+          ),
       })}>
       <Tab.Screen
         name="Home"
         component={BeritaScreen}
         options={{
           title: 'Berita',
+          headerShown:false,
           headerStyle: {backgroundColor: '#004D40'},
           headerTitleStyle: {color: 'white'},
+          headerRight: () => (
+            <StatusBar barStyle="dark-content" backgroundColor="#004D40" />
+          ),
         }}
       />
       <Tab.Screen
@@ -48,6 +61,9 @@ function MyTabs() {
           title: 'Bookmark',
           headerStyle: {backgroundColor: '#004D40'},
           headerTitleStyle: {color: 'white'},
+          headerRight: () => (
+            <StatusBar barStyle="dark-content" backgroundColor="#004D40" />
+          ),
         }}
       />
 

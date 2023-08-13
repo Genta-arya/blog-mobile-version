@@ -10,12 +10,12 @@ import {
   Animated,
   RefreshControl,
 } from 'react-native';
-
+import gambar from '../Asset/Header.png';
 const BeritaScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [articles, setArticles] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [animatedValue] = useState(new Animated.Value(0)); 
+  const [animatedValue] = useState(new Animated.Value(0));
   const [isRefreshing, setIsRefreshing] = useState(false);
   const api = 'http://192.168.247.59:3001/posting/';
 
@@ -62,7 +62,8 @@ const BeritaScreen = ({navigation}) => {
     const currentDate = new Date();
     const articleDate = new Date(date);
     const timeDiff = currentDate - articleDate;
-    const minutes = Math.floor(timeDiff / (1000 * 60));
+    const seconds = Math.floor(timeDiff / 1000);
+    const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
     const weeks = Math.floor(days / 7);
@@ -84,14 +85,16 @@ const BeritaScreen = ({navigation}) => {
       case minutes > 0:
         timeAgo = `${minutes} menit yang lalu`;
         break;
+      case seconds > 0:
+        timeAgo = `${seconds} detik yang lalu`;
+        break;
       default:
         timeAgo = `Baru saja`;
         break;
     }
-  
+
     return timeAgo;
   };
-  
 
   useEffect(() => {
     Animated.timing(animatedValue, {
@@ -107,6 +110,9 @@ const BeritaScreen = ({navigation}) => {
       refreshControl={
         <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
       }>
+      <View style={styles.header}>
+        <Image source={require('../Asset/Header.png')} style={styles.headerImage} />
+      </View>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={selectedCategory}
@@ -195,8 +201,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f7f7f7',
   },
+  header: {
+    backgroundColor: '#004D40',
+    height: 120,
+    borderBottomLeftRadius: 60,
+    borderBottomRightRadius: 67,
+    overflow: 'hidden',
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    marginBottom:5,
+  },
+  headerImage: {
+    width: "50%", 
+    height: 40, 
+    marginTop:20,
+  },
   picker: {
-    margin: 10,
+    margin: 5,
   },
   articleWrapper: {
     borderWidth: 1,
@@ -204,7 +225,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#fff',
     margin: 5,
-    elevation:5,
+    elevation: 5,
   },
   articleContainer: {
     marginBottom: 16,

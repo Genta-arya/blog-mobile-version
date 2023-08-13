@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  ScrollView,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const BookmarkScreen = ({ navigation }) => {
+const BookmarkScreen = ({navigation}) => {
   const [bookmarkedItems, setBookmarkedItems] = useState([]);
   const api = 'http://192.168.247.59:3001/posting/';
 
@@ -20,7 +28,9 @@ const BookmarkScreen = ({ navigation }) => {
   const loadBookmarkedItems = async () => {
     try {
       const keys = await AsyncStorage.getAllKeys();
-      const bookmarkedKeys = keys.filter(key => key.startsWith('bookmarkState_'));
+      const bookmarkedKeys = keys.filter(key =>
+        key.startsWith('bookmarkState_'),
+      );
       const bookmarkedData = await AsyncStorage.multiGet(bookmarkedKeys);
       const parsedData = bookmarkedData.map(item => JSON.parse(item[1]));
       setBookmarkedItems(parsedData);
@@ -29,56 +39,63 @@ const BookmarkScreen = ({ navigation }) => {
     }
   };
 
-  const handleItemClick = (item) => {
+  const handleItemClick = item => {
     navigation.navigate('Detail', item);
   };
 
-  const handleSwipeRight = (item) => {
+  const handleSwipeRight = item => {
     Alert.alert(
       'Hapus Bookmark',
       `Anda yakin ingin menghapus "${item.title}" dari bookmark?`,
       [
         {
-          text: 'Batal',
+          text: 'Tidak',
           style: 'cancel',
         },
         {
-          text: 'Hapus',
+          text: 'Ya',
           onPress: () => removeBookmark(item),
         },
       ],
     );
   };
 
-  const removeBookmark = async (item) => {
+  const removeBookmark = async item => {
     try {
       await AsyncStorage.removeItem(`bookmarkState_${item.title}`);
-      loadBookmarkedItems(); 
+      loadBookmarkedItems();
     } catch (error) {
       console.error('Error removing bookmark:', error);
     }
   };
 
   return (
-    <View style={styles.container}>
-      {bookmarkedItems.length > 0 ? (
-        bookmarkedItems.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.itemContainer}
-            onPress={() => handleItemClick(item)}
-            onLongPress={() => handleSwipeRight(item)}>
-            <Image source={{ uri: `${api}/${item.image}` }} style={styles.image} />
-            <View style={styles.itemInfo}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.author}>By: {item.author}</Text>
-            </View>
-          </TouchableOpacity>
-        ))
-      ) : (
-        <Text style={styles.noBookmarkText}>Tidak ada bookmark yang tersimpan</Text>
-      )}
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {bookmarkedItems.length > 0 ? (
+          bookmarkedItems.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.itemContainer}
+              onPress={() => handleItemClick(item)}
+              onLongPress={() => handleSwipeRight(item)}>
+              <Image
+                source={{uri: `${api}/${item.image}`}}
+                style={styles.image}
+              />
+              <View style={styles.itemInfo}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.author}>By: {item.author}</Text>
+              </View>
+            </TouchableOpacity>
+          ))
+        ) : (
+          <Text style={styles.noBookmarkText}>
+            Tidak ada bookmark yang tersimpan
+          </Text>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -86,18 +103,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
+    
   },
   itemContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
-    marginBottom: 20,
+    padding: 15,
+    borderWidth: 2,
+    borderColor: '#004D40',
+    marginBottom: 3,
+    borderRadius: 10,
+ 
+
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 100,
     resizeMode: 'cover',
-    borderRadius: 8,
+    borderRadius: 10,
     marginRight: 10,
   },
   itemInfo: {

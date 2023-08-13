@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/white" /> <!-- Tambahkan elemen ini untuk latar belakang putih -->
+    <item
+        android:drawable="@mipmap/bg"
+        android:gravity="center"
+        android:width="350dp"
+        android:height="100dp"
+        android:scaleType="fitCenter" />
+
+    <!-- Tambahkan item lainnya jika diperlukan -->
+</layer-list>
