@@ -4,10 +4,12 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontistoIcon from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
+import Game from 'react-native-vector-icons/Ionicons';
 import AboutScreen from '../Screen/AboutScreen';
 import BeritaScreen from '../Screen/BeritaScreen';
 import BookmarkScreen from '../Screen/BookmarkScreen';
 import {StatusBar} from 'react-native';
+import GameScreen from '../Screen/GameScreen';
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
@@ -27,26 +29,29 @@ function MyTabs() {
           } else if (route.name === 'About') {
             IconComponent = Feather;
             iconName = focused ? 'info' : 'info';
+          }else if (route.name === 'Games') {
+            IconComponent = Game;
+            iconName = focused ? 'game-controller' : 'game-controller';
           }
 
           return <IconComponent name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: '#004D40',
-        tabBarInactiveTintColor: 'gray', 
-        tabBarShowLabel: true, 
+        tabBarInactiveTintColor: 'gray',
+        tabBarShowLabel: true,
         tabBarStyle: {
-          backgroundColor: 'white', 
+          backgroundColor: 'white',
         },
-         headerRight: () => (
-            <StatusBar barStyle="dark-content" backgroundColor="#004D40" />
-          ),
+        headerRight: () => (
+          <StatusBar barStyle="dark-content" backgroundColor="#004D40" />
+        ),
       })}>
       <Tab.Screen
         name="Home"
         component={BeritaScreen}
         options={{
           title: 'Berita',
-          headerShown:false,
+          headerShown: false,
           headerStyle: {backgroundColor: '#004D40'},
           headerTitleStyle: {color: 'white'},
           headerRight: () => (
@@ -66,6 +71,19 @@ function MyTabs() {
           ),
         }}
       />
+       <Tab.Screen
+        name="Games"
+        component={GameScreen}
+        options={{
+          title: 'Game',
+          headerStyle: {backgroundColor: '#004D40'},
+          headerTitleStyle: {color: 'white'},
+          headerRight: () => (
+            <StatusBar barStyle="dark-content" backgroundColor="#004D40" />
+          ),
+        }}
+      />
+     
 
       <Tab.Screen
         name="About"

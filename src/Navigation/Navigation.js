@@ -4,6 +4,8 @@ import MyTabs from './BottomTabs';
 import DetailScreen from '../Screen/DetailScreen';
 import {StatusBar} from 'react-native';
 import Onboarding from '../Screen/Onboarding';
+import FlappyBirdGame from '../Screen/TapGameScreen';
+import CrosswordGame from '../Screen/QuizScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +28,32 @@ function MyStack() {
           component={DetailScreen}
           options={{
             title: 'Baca sekarang',
+            headerStyle: {backgroundColor: '#fff'},
+            headerTintColor: 'black',
+            headerShown: true,
+            headerRight: () => (
+              <StatusBar barStyle="dark-content" backgroundColor="white" />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="FlappyBird"
+          component={FlappyBirdGame}
+          options={{
+            title: 'Tap Tap Game',
+            headerStyle: {backgroundColor: '#fff'},
+            headerTintColor: 'black',
+            headerShown: true,
+            headerRight: () => (
+              <StatusBar barStyle="dark-content" backgroundColor="white" />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="Quiz"
+          component={CrosswordGame}
+          options={{
+            title: 'Quiz Game',
             headerStyle: {backgroundColor: '#fff'},
             headerTintColor: 'black',
             headerShown: true,
